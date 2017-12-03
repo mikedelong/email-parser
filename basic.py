@@ -1,4 +1,3 @@
-
 import pyzmail
 
 import logging
@@ -20,6 +19,11 @@ console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 console_handler.setLevel(logging.DEBUG)
 logger.debug('started')
+
+current_file = './example.msg'
+with open(current_file, 'rb') as fp:
+    message = pyzmail.message_from_file(fp)
+    
 
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
