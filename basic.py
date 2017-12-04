@@ -22,7 +22,18 @@ current_file = dir_path + r"/example.msg"
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 try:
     message = outlook.OpenSharedItem(current_file)
-    logger.debug('sender : ' + message.SenderName)
+    logger.debug('sender name: %s' , message.SenderName)
+    logger.debug('sender address: %s' , message.SenderEmailAddress)
+
+    # msg.SenderEmailAddress
+    # msg.SentOn
+    # msg.To
+    # msg.CC
+    # msg.BCC
+    # msg.Subject
+    # msg.Body
+
+
 except Exception as this_exception:
     logger.warning(this_exception)
 
