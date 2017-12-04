@@ -15,13 +15,16 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging.DEBUG)
 logger.debug('started')
 
-current_file = '.\example.msg'
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-logger.debug(dir_path)
+current_file = dir_path + r"/example.msg"
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-msg = outlook.OpenSharedItem(dir_path + r"/example.msg")
+try:
+    message = outlook.OpenSharedItem(current_file)
+    logger.debug('sender : ' + message.SenderName)
+except Exception as this_exception:
+    logger.warning(this_exception)
 
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
