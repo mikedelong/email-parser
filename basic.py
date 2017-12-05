@@ -32,7 +32,8 @@ try:
     # msg.Subject
     # msg.Body
 
-
+except AttributeError as attributeError:
+    logger.warning(attributeError)
 except Exception as this_exception:
     logger.warning(this_exception)
 
