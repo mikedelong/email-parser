@@ -24,9 +24,8 @@ try:
     message = outlook.OpenSharedItem(current_file)
     logger.debug('sender name: %s' , message.SenderName)
     logger.debug('sender address: %s' , message.SenderEmailAddress)
+    logger.debug('sent on: %s ', message.SentOn)
 
-    # msg.SenderEmailAddress
-    # msg.SentOn
     # msg.To
     # msg.CC
     # msg.BCC
