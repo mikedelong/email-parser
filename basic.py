@@ -15,10 +15,9 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging.DEBUG)
 logger.debug('started')
 
+# use the local directory
 dir_path = os.path.dirname(os.path.realpath(__file__))
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-
-# current_file = dir_path + r"/example.msg"
 
 for file_name in os.listdir(dir_path):
     if file_name.endswith(".msg"):
