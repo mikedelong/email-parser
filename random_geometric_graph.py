@@ -2,8 +2,14 @@
 
 import networkx as nx
 import plotly.offline as offline
-# todo restrict
-from plotly.graph_objs import *
+from plotly.graph_objs import Data
+from plotly.graph_objs import Figure
+from plotly.graph_objs import Layout
+from plotly.graph_objs import Line
+from plotly.graph_objs import Marker
+from plotly.graph_objs import Scatter
+from plotly.graph_objs import XAxis
+from plotly.graph_objs import YAxis
 
 G = nx.random_geometric_graph(200, 0.125)
 pos = nx.get_node_attributes(G, 'pos')
