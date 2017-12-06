@@ -28,8 +28,8 @@ try:
     logger.debug('sent to: %s', message.To)
     logger.debug('CC: %s', message.CC)
     logger.debug('BCC: %s', message.BCC)
+    logger.debug('Subject: %s', message.Subject)
 
-    # msg.Subject
     # msg.Body
 
 except AttributeError as attributeError:
