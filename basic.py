@@ -25,8 +25,8 @@ try:
     logger.debug('sender name: %s' , message.SenderName)
     logger.debug('sender address: %s' , message.SenderEmailAddress)
     logger.debug('sent on: %s ', message.SentOn)
+    logger.debug('sent to: %s', message.To)
 
-    # msg.To
     # msg.CC
     # msg.BCC
     # msg.Subject
