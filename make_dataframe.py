@@ -2,6 +2,7 @@ import logging
 import time
 import win32com.client
 import os
+import pandas
 
 start_time = time.time()
 
@@ -15,6 +16,7 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging.DEBUG)
 logger.debug('started')
 
+# use the local directory
 dir_path = os.path.dirname(os.path.realpath(__file__))
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 
@@ -25,14 +27,16 @@ for file_name in os.listdir(dir_path):
         logger.debug(current_file)
         try:
             message = outlook.OpenSharedItem(current_file)
-            logger.debug('sender name: %s', message.SenderName)
-            logger.debug('sender address: %s', message.SenderEmailAddress)
-            logger.debug('sent on: %s ', message.SentOn)
-            logger.debug('sent to: %s', message.To)
-            logger.debug('CC: %s', message.CC)
-            logger.debug('BCC: %s', message.BCC)
-            logger.debug('Subject: %s', message.Subject)
-            logger.debug('Body: %s', message.Body)
+            record = (message.SenderName, message.SenderEmailAddress, message.SentOn, message.To,
+                      message.CC, message.BCC, message.Subject, message.Body)
+            logger.debug('sender name: %s', record[0])
+            logger.debug('sender address: %s', record[1])
+            logger.debug('sent on: %s ', record[2])
+            logger.debug('sent to: %s', record[3])
+            logger.debug('CC: %s', record[4])
+            logger.debug('BCC: %s', record[5])
+            logger.debug('Subject: %s', record[6])
+            logger.debug('Body: %s', record[7])
 
 
         except AttributeError as attributeError:
