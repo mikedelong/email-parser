@@ -13,20 +13,17 @@ from plotly.graph_objs import XAxis
 from plotly.graph_objs import YAxis
 
 options_2 = {
- 'with_labels': False,
- 'node_color': 'grey',
- 'node_size': 10,
- 'linewidths': 0,
- 'width': 0.1,
+    'with_labels': False,
+    'node_color': 'grey',
+    'node_size': 10,
+    'linewidths': 0,
+    'width': 0.1,
 }
 
 node_count = 10
 graph = nx.barabasi_albert_graph(node_count, 3)
 layout = nx.circular_layout(graph)
 nx.set_node_attributes(graph, 'pos', layout)
-
-pos=nx.get_node_attributes(graph,'pos')
-
 
 edge_trace = Scatter(
     x=[],
@@ -90,4 +87,4 @@ fig = Figure(data=Data([edge_trace, node_trace]),
                  xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
                  yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
-offline.plot(fig, filename='networkx.html')
+offline.plot(fig, filename='barabasi.html')
