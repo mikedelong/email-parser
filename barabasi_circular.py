@@ -9,9 +9,10 @@ options_2 = {
  'width': 0.1,
 }
 
-graph = nx.barabasi_albert_graph(100, 3)
-# nx.draw_circular(G, **options_2)
+node_count = 10
+graph = nx.barabasi_albert_graph(node_count, 3)
 
-nx.draw_circular(graph, node_size = 10)
+layout = nx.circular_layout(graph)
+nx.draw(graph, layout, node_size = 10)
 
 plt.show()
