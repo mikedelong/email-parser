@@ -1,6 +1,3 @@
-import matplotlib.pyplot as plt
-import networkx as nx
-
 import networkx as nx
 import plotly.offline as offline
 from plotly.graph_objs import Data
@@ -78,12 +75,6 @@ fig = Figure(data=Data([edge_trace, node_trace]),
                  showlegend=False,
                  hovermode='closest',
                  margin=dict(b=20, l=5, r=5, t=40),
-
-                 # annotations=[dict(
-                 #     text="Python code: <a href='https://plot.ly/ipython-notebooks/network-graphs/'> https://plot.ly/ipython-notebooks/network-graphs/</a>",
-                 #     showarrow=False,
-                 #     xref="paper", yref="paper",
-                 #     x=0.005, y=-0.002)],
                  xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
                  yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
