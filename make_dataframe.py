@@ -71,10 +71,10 @@ for file_name in os.listdir(dir_path):
                 G.add_edge(record[0], recipient)
                 logger.debug('%s %s' % (record[0], recipient))
 
-        t0 = G.node
-        logger.debug(t0.keys())
         pos = nx.spring_layout(G)
         nx.set_node_attributes(G, 'pos', pos)
+
+        logger.debug(G.nodes())
 
         edge_trace = Scatter(hoverinfo='none', line=Line(width=0.5, color='#888'), mode='lines', x=[], y=[])
 
@@ -100,10 +100,19 @@ for file_name in os.listdir(dir_path):
             node_trace['x'].append(x)
             node_trace['y'].append(y)
 
-        for node, adjacencies in enumerate(G.adjacency_list()):
-            node_trace['marker']['color'].append(len(adjacencies))
-            node_info = '# of connections: ' + str(len(adjacencies))
-            node_trace['text'].append(node_info)
+        markers_are_names = True
+        markers_are_counts = False
+        if markers_are_counts:
+            for node, adjacencies in enumerate(G.adjacency_list()):
+                node_trace['marker']['color'].append(len(adjacencies))
+                node_info = '# of connections: ' + str(len(adjacencies))
+                node_trace['text'].append(node_info)
+        elif markers_are_names:
+            nodes = G.nodes()
+            for node, adjacencies in enumerate(G.adjacency_list()):
+                node_trace['marker']['color'].append(len(adjacencies))
+                node_info = nodes[node]
+                node_trace['text'].append(node_info)
 
         fig = Figure(data=Data([edge_trace, node_trace]),
                      layout=Layout(
