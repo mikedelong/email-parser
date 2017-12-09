@@ -1,9 +1,10 @@
 import logging
-import time
-import win32com.client
 import os
-import pandas
+import time
+
 import networkx as nx
+import plotly.offline as offline
+import win32com.client
 from plotly.graph_objs import Data
 from plotly.graph_objs import Figure
 from plotly.graph_objs import Layout
@@ -12,7 +13,6 @@ from plotly.graph_objs import Marker
 from plotly.graph_objs import Scatter
 from plotly.graph_objs import XAxis
 from plotly.graph_objs import YAxis
-import plotly.offline as offline
 
 start_time = time.time()
 
