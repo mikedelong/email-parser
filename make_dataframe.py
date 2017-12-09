@@ -28,6 +28,7 @@ logger.debug('started')
 
 # use the local directory
 dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = dir_path + '\\messages\\'
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 
 records = list()
