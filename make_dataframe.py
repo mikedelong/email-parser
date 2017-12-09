@@ -26,7 +26,7 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging.DEBUG)
 logger.debug('started')
 
-# use the local directory
+# use the messages subfolder of the local directory
 dir_path = os.path.dirname(os.path.realpath(__file__))
 dir_path = dir_path + '\\messages\\'
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
@@ -55,12 +55,7 @@ for file_name in os.listdir(dir_path):
         except Exception as this_exception:
             logger.warning(this_exception)
 
-        # column_names = ['Sender', 'SenderAddress', 'SentDate', 'SentTo', 'CC', 'BCC', 'Subject', 'Body']
-        # data_frame = pandas.DataFrame(columns=column_names)
-        # for record in records:
-        #     data_frame.append(record)
-        # logger.debug(data_frame)
-
+# build a graph out of the records array
 G = nx.Graph()
 for record in records:
     recipients = [item.strip() for item in ';'.join([record[3], record[4]]).split(';')]
