@@ -10,8 +10,10 @@ outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 folder_index = 6
 inbox = outlook.GetDefaultFolder(folder_index)
 messages = inbox.Items
-print (len(messages))
-message = messages.GetLast()
-print(message.subject)
-if False:
-    print(message.body_content)
+for message in messages:
+
+    print(message.subject)
+    if False:
+        print(message.body_content)
+
+print ('We have %d messages in all.' % len(messages))
