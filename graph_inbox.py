@@ -31,6 +31,9 @@ outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 folder_index = 6
 inbox = outlook.GetDefaultFolder(folder_index)
 
+# todo break this into a data-reading, offline-document section
+# todo and a processing section
+
 messages = inbox.Items
 # build a graph out of the records array
 G = nx.Graph()
