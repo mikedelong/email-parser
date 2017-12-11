@@ -51,7 +51,6 @@ for message in messages:
     except AttributeError as attributeError:
         logger.warning(attributeError)
 
-
 pos = nx.spring_layout(G)
 nx.set_node_attributes(G, 'pos', pos)
 
@@ -96,8 +95,8 @@ elif markers_are_names:
         node_trace['text'].append(node_info)
 
 fig = Figure(data=Data([edge_trace, node_trace]),
-             layout=Layout(title='<br>Network graph made with Python', titlefont=dict(size=16), showlegend=False,
-                           hovermode='closest', margin=dict(b=20, l=5, r=5, t=40),
+             layout=Layout(title='<br>Inbox network graph made with Python/Plotly', titlefont=dict(size=16),
+                           showlegend=False, hovermode='closest', margin=dict(b=20, l=5, r=5, t=40),
                            xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
                            yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
