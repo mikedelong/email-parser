@@ -64,6 +64,7 @@ for message in messages:
     except AttributeError as attributeError:
         logger.warning(attributeError)
 
+# todo add an initial layout to get repeatable results
 pos = nx.spring_layout(G)
 nx.set_node_attributes(G, 'pos', pos)
 
