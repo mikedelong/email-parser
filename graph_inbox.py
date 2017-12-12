@@ -100,8 +100,7 @@ node_trace = Scatter(x=[], y=[], text=[], mode='markers', hoverinfo='text',
                          # 'Greys' | 'Greens' | 'Bluered' | 'Hot' | 'Picnic' | 'Portland' |
                          # Jet' | 'RdBu' | 'Blackbody' | 'Earth' | 'Electric' | 'YIOrRd' | 'YIGnBu'
                          colorscale='YIGnBu', reversescale=True, color=[], size=10,
-                         colorbar=dict(thickness=15, title='Node Connections', xanchor='left',
-                                       titleside='right'),
+                         colorbar=dict(thickness=15, title='Node Connections', xanchor='left',titleside='right'),
                          line=dict(width=2)))
 
 for node in G.nodes():
