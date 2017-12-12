@@ -13,6 +13,8 @@ from plotly.graph_objs import Scatter
 from plotly.graph_objs import XAxis
 from plotly.graph_objs import YAxis
 
+import csv
+
 start_time = time.time()
 
 # set up logging
@@ -26,8 +28,15 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging_level)
 logger.debug('started')
 
-known_names = dict()
+# known_names = dict()
 # todo read name consolidation data from an external file
+
+known_names_file = './known_names.csv'
+with open(known_names_file, mode='r') as infile:
+    reader = csv.reader(infile,delimiter=';')
+    known_names = {row[0]:row[1] for row in reader}
+
+logger.info(known_names)
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 
@@ -45,7 +54,7 @@ for message in messages:
         sender = message.sendername
         if sender in known_names.keys():
             canonical_name = known_names[sender]
-            logger.debug('substituting %s for %s as sender' % (canonical_name, sender))
+            logger.info('substituting %s for %s as sender' % (canonical_name, sender))
             sender = canonical_name
         tos = message.to
         cc = message.cc
@@ -54,7 +63,9 @@ for message in messages:
 
         for recipient in recipients:
             if recipient in known_names.keys():
-                recipient = known_names[recipient]
+                canonical_name = known_names[recipient]
+                logger.info('substituting %s for %s as recipient' % (canonical_name, recipient))
+                recipient = canonical_name
             if sender not in G:
                 G.add_node(sender)
             if recipient not in G:
