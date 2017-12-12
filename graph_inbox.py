@@ -48,10 +48,6 @@ records = list()
 for message in messages:
     try:
         sender = message.sendername
-        if sender in known_names.keys():
-            canonical_name = known_names[sender]
-            logger.debug('substituting %s for %s as sender' % (canonical_name, sender))
-            sender = canonical_name
         tos = message.to
         cc = message.cc
         recipients = [item.strip() for item in ';'.join([tos, cc]).split(';')]
@@ -66,6 +62,10 @@ G = nx.Graph()
 for record in records:
     items = record.split(';')
     sender = items[0]
+    if sender in known_names.keys():
+        canonical_name = known_names[sender]
+        logger.debug('substituting %s for %s as sender' % (canonical_name, sender))
+        sender = canonical_name
     recipients = items[1:]
     for recipient in recipients:
         if recipient in known_names.keys():
