@@ -27,13 +27,10 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging_level)
 logger.debug('started')
 
-# todo read name consolidation data from an external file
-
 known_names_file = './known_names.csv'
 with open(known_names_file, mode='r') as infile:
     reader = csv.reader(infile, delimiter=';')
     known_names = {row[0]: row[1] for row in reader}
-
 logger.info(known_names)
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
@@ -109,7 +106,7 @@ node_trace = Scatter(x=[], y=[], text=[], mode='markers', hoverinfo='text',
                          # 'Greys' | 'Greens' | 'Bluered' | 'Hot' | 'Picnic' | 'Portland' |
                          # Jet' | 'RdBu' | 'Blackbody' | 'Earth' | 'Electric' | 'YIOrRd' | 'YIGnBu'
                          colorscale='YIGnBu', reversescale=True, color=[], size=10,
-                         colorbar=dict(thickness=15, title='Node Connections', xanchor='left',titleside='right'),
+                         colorbar=dict(thickness=15, title='Node Connections', xanchor='left', titleside='right'),
                          line=dict(width=2)))
 
 for node in G.nodes():
