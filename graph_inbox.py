@@ -33,8 +33,8 @@ logger.debug('started')
 
 known_names_file = './known_names.csv'
 with open(known_names_file, mode='r') as infile:
-    reader = csv.reader(infile,delimiter=';')
-    known_names = {row[0]:row[1] for row in reader}
+    reader = csv.reader(infile, delimiter=';')
+    known_names = {row[0]: row[1] for row in reader}
 
 logger.info(known_names)
 
