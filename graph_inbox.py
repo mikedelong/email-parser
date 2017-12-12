@@ -18,12 +18,16 @@ start_time = time.time()
 # set up logging
 formatter = logging.Formatter('%(asctime)s : %(name)s :: %(levelname)s : %(message)s')
 logger = logging.getLogger('main')
-logger.setLevel(logging.DEBUG)
+logging_level = logging.INFO
+logger.setLevel(logging_level)
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
-console_handler.setLevel(logging.DEBUG)
+console_handler.setLevel(logging_level)
 logger.debug('started')
+
+known_names = dict()
+# todo read name consolidation data from an external file
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 
@@ -33,18 +37,24 @@ inbox = outlook.GetDefaultFolder(folder_index)
 
 # todo break this into a data-reading, offline-document section
 # todo and a processing section
-
 messages = inbox.Items
 # build a graph out of the list of messages
 G = nx.Graph()
 for message in messages:
     try:
         sender = message.sendername
+        if sender in known_names.keys():
+            canonical_name = known_names[sender]
+            logger.debug('substituting %s for %s as sender' % (canonical_name, sender))
+            sender = canonical_name
         tos = message.to
         cc = message.cc
         recipients = [item.strip() for item in ';'.join([tos, cc]).split(';')]
         recipients = [item for item in recipients if len(item) > 0]
+
         for recipient in recipients:
+            if recipient in known_names.keys():
+                recipient = known_names[recipient]
             if sender not in G:
                 G.add_node(sender)
             if recipient not in G:
