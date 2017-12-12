@@ -47,7 +47,8 @@ inbox = outlook.GetDefaultFolder(folder_index)
 # todo and a processing section
 messages = inbox.Items
 # build a graph out of the list of messages
-G = nx.Graph()
+records = list()
+
 for message in messages:
     try:
         sender = message.sendername
@@ -59,25 +60,31 @@ for message in messages:
         cc = message.cc
         recipients = [item.strip() for item in ';'.join([tos, cc]).split(';')]
         recipients = [item for item in recipients if len(item) > 0]
-
-        string_of_interest = 'xxx'
-        for recipient in recipients:
-            if recipient in known_names.keys():
-                canonical_name = known_names[recipient]
-                logger.debug('substituting %s for %s as recipient' % (canonical_name, recipient))
-                recipient = canonical_name
-            if string_of_interest in sender.lower():
-                logger.info(sender)
-            if string_of_interest in recipient.lower():
-                logger.info(recipient)
-            if sender not in G:
-                G.add_node(sender)
-            if recipient not in G:
-                G.add_node(recipient)
-            G.add_edge(sender, recipient)
-            logger.debug('sender: [%s] %d recipient: [%s] %d' % (sender, len(sender), recipient, len(recipient)))
+        records.append(';'.join([sender] + recipients))
     except AttributeError as attributeError:
         logger.warning(attributeError)
+
+G = nx.Graph()
+for record in records:
+    items = record.split(';')
+    sender = items[0]
+    recipients = [item for item in items[:-1]]
+    string_of_interest = 'xxx'
+    for recipient in recipients:
+        if recipient in known_names.keys():
+            canonical_name = known_names[recipient]
+            logger.debug('substituting %s for %s as recipient' % (canonical_name, recipient))
+            recipient = canonical_name
+        if string_of_interest in sender.lower():
+            logger.info(sender)
+        if string_of_interest in recipient.lower():
+            logger.info(recipient)
+        if sender not in G:
+            G.add_node(sender)
+        if recipient not in G:
+            G.add_node(recipient)
+        G.add_edge(sender, recipient)
+        logger.debug('sender: [%s] %d recipient: [%s] %d' % (sender, len(sender), recipient, len(recipient)))
 
 # todo add an initial layout to get repeatable results
 pos = nx.spring_layout(G)
