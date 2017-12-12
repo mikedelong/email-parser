@@ -28,8 +28,8 @@ console_handler.setLevel(logging_level)
 logger.debug('started')
 
 known_names_file = './known_names.csv'
-with open(known_names_file, mode='r') as infile:
-    reader = csv.reader(infile, delimiter=';')
+with open(known_names_file, mode='r') as input_file:
+    reader = csv.reader(input_file, delimiter=';')
     known_names = {row[0]: row[1] for row in reader}
 logger.info(known_names)
 
@@ -56,6 +56,13 @@ for message in messages:
         records.append(record)
     except AttributeError as attributeError:
         logger.warning(attributeError)
+
+# before we go on let's write the records as ragged CSV
+records_file = './records.csv'
+with open(records_file, 'w', encoding='utf-8') as output_file:
+    writer = csv.writer(output_file, delimiter=';')
+    for record in records:
+        writer.writerow(record)
 
 string_of_interest = 'xxx'
 G = nx.Graph()
