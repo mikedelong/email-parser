@@ -43,13 +43,14 @@ for message in messages:
         tos = message.to
         cc = message.cc
         recipients = [item.strip() for item in ';'.join([tos, cc]).split(';')]
+        recipients = [item for item in recipients if len(item) > 0]
         for recipient in recipients:
             if sender not in G:
                 G.add_node(sender)
             if recipient not in G:
                 G.add_node(recipient)
             G.add_edge(sender, recipient)
-            logger.debug('%s %s' % (sender, recipient))
+            logger.debug('sender: [%s] %d recipient: [%s] %d' % (sender, len(sender), recipient, len(recipient)))
     except AttributeError as attributeError:
         logger.warning(attributeError)
 
