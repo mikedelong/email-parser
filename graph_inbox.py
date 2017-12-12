@@ -54,18 +54,23 @@ for message in messages:
         sender = message.sendername
         if sender in known_names.keys():
             canonical_name = known_names[sender]
-            logger.info('substituting %s for %s as sender' % (canonical_name, sender))
+            logger.debug('substituting %s for %s as sender' % (canonical_name, sender))
             sender = canonical_name
         tos = message.to
         cc = message.cc
         recipients = [item.strip() for item in ';'.join([tos, cc]).split(';')]
         recipients = [item for item in recipients if len(item) > 0]
 
+        string_of_interest = 'xxx'
         for recipient in recipients:
             if recipient in known_names.keys():
                 canonical_name = known_names[recipient]
-                logger.info('substituting %s for %s as recipient' % (canonical_name, recipient))
+                logger.debug('substituting %s for %s as recipient' % (canonical_name, recipient))
                 recipient = canonical_name
+            if string_of_interest in sender.lower():
+                logger.info(sender)
+            if string_of_interest in recipient.lower():
+                logger.info(recipient)
             if sender not in G:
                 G.add_node(sender)
             if recipient not in G:
