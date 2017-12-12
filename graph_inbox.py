@@ -27,7 +27,6 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging_level)
 logger.debug('started')
 
-# known_names = dict()
 # todo read name consolidation data from an external file
 
 known_names_file = './known_names.csv'
