@@ -1,3 +1,4 @@
+import csv
 import logging
 import time
 
@@ -12,8 +13,6 @@ from plotly.graph_objs import Marker
 from plotly.graph_objs import Scatter
 from plotly.graph_objs import XAxis
 from plotly.graph_objs import YAxis
-
-import csv
 
 start_time = time.time()
 
