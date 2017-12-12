@@ -35,7 +35,7 @@ inbox = outlook.GetDefaultFolder(folder_index)
 # todo and a processing section
 
 messages = inbox.Items
-# build a graph out of the records array
+# build a graph out of the list of messages
 G = nx.Graph()
 for message in messages:
     try:
