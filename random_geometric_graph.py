@@ -15,15 +15,13 @@ G = nx.random_geometric_graph(200, 0.125)
 pos = nx.get_node_attributes(G, 'pos')
 
 dmin = 1
-ncenter = 0
+center = 0
 for n in pos:
     x, y = pos[n]
     d = (x - 0.5) ** 2 + (y - 0.5) ** 2
     if d < dmin:
-        ncenter = n
+        center = n
         dmin = d
-
-p = nx.single_source_shortest_path_length(G, ncenter)
 
 edge_trace = Scatter(
     x=[],
@@ -78,11 +76,6 @@ fig = Figure(data=Data([edge_trace, node_trace]),
                  showlegend=False,
                  hovermode='closest',
                  margin=dict(b=20, l=5, r=5, t=40),
-                 annotations=[dict(
-                     text="Python code: <a href='https://plot.ly/ipython-notebooks/network-graphs/'> https://plot.ly/ipython-notebooks/network-graphs/</a>",
-                     showarrow=False,
-                     xref="paper", yref="paper",
-                     x=0.005, y=-0.002)],
                  xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
                  yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
