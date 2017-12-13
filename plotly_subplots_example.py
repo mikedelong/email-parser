@@ -20,4 +20,6 @@ fig.append_trace(trace1, 1, 1)
 fig.append_trace(trace2, 1, 2)
 
 fig['layout'].update(height=600, width=600, title='see subplots run')
-offline.plot(fig, filename='simple-subplot.html')
+
+output_html = 'simple-subplot.html'
+offline.plot(fig, filename=output_html)
