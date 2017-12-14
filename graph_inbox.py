@@ -123,14 +123,14 @@ for node in G.nodes():
 markers_are_names = True
 markers_are_counts = False
 if markers_are_counts:
-    for node, adjacencies in enumerate(G.adjacency_list()):
-        node_trace['marker']['color'].append(len(adjacencies))
-        node_info = '# of connections: ' + str(len(adjacencies))
+    for node, neighbors in enumerate(G.adjacency_list()):
+        node_trace['marker']['color'].append(len(neighbors))
+        node_info = '# of connections: ' + str(len(neighbors))
         node_trace['text'].append(node_info)
 elif markers_are_names:
     nodes = G.nodes()
-    for node, adjacencies in enumerate(G.adjacency_list()):
-        node_trace['marker']['color'].append(len(adjacencies))
+    for node, neighbors in enumerate(G.adjacency_list()):
+        node_trace['marker']['color'].append(len(neighbors))
         node_info = nodes[node]
         node_trace['text'].append(node_info)
 
