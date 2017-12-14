@@ -60,9 +60,8 @@ for message in messages:
 # before we go on let's write the records as ragged CSV
 records_file = './records.csv'
 with open(records_file, 'w', encoding='utf-8') as output_file:
-    writer = csv.writer(output_file, delimiter=';')
     for record in records:
-        writer.writerow(record)
+        output_file.write('%s\n' % record)
 
 string_of_interest = 'xxx'
 G = nx.Graph()
