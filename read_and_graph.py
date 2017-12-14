@@ -4,7 +4,6 @@ import time
 
 import networkx as nx
 import plotly.offline as offline
-import win32com.client
 from plotly.graph_objs import Data
 from plotly.graph_objs import Figure
 from plotly.graph_objs import Layout
@@ -33,36 +32,12 @@ with open(known_names_file, mode='r') as input_file:
     known_names = {row[0]: row[1] for row in reader}
 logger.info(known_names)
 
-outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-
-# "6" refers to the index of a folder - in this case, the inbox.
-folder_index = 6
-inbox = outlook.GetDefaultFolder(folder_index)
-
-# todo break this into a data-reading, offline-document section
-# todo and a processing section
-messages = inbox.Items
-# build a graph out of the list of messages
-records = list()
-
-for message in messages:
-    try:
-        sender = message.sendername
-        tos = message.to
-        cc = message.cc
-        recipients = [item.strip() for item in ';'.join([tos, cc]).split(';')]
-        recipients = [item for item in recipients if len(item) > 0]
-        record = ';'.join([sender] + recipients)
-        records.append(record)
-    except AttributeError as attributeError:
-        logger.warning(attributeError)
-
-# before we go on let's write the records as ragged CSV
 records_file = './records.csv'
-with open(records_file, 'w', encoding='utf-8') as output_file:
-    writer = csv.writer(output_file, delimiter=';')
-    for record in records:
-        writer.writerow(record)
+
+with open(records_file, 'r', encoding='utf-8') as input_file:
+    records = input_file.readlines()
+# strip off trailing newlines as appropriate
+records = [item.strip() for item in records]
 
 string_of_interest = 'xxx'
 G = nx.Graph()
