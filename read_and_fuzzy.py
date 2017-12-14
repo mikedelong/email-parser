@@ -2,17 +2,6 @@ import csv
 import logging
 import time
 
-import networkx as nx
-import plotly.offline as offline
-from plotly.graph_objs import Data
-from plotly.graph_objs import Figure
-from plotly.graph_objs import Layout
-from plotly.graph_objs import Line
-from plotly.graph_objs import Marker
-from plotly.graph_objs import Scatter
-from plotly.graph_objs import XAxis
-from plotly.graph_objs import YAxis
-
 import fuzzywuzzy
 
 start_time = time.time()
@@ -40,6 +29,16 @@ with open(records_file, 'r', encoding='utf-8') as input_file:
     records = input_file.readlines()
 # strip off trailing newlines as appropriate
 records = [item.strip() for item in records]
+
+entities = set()
+for record in records:
+    items = record.split(';')
+    for item in items:
+        entities.add(item)
+
+entities = list(entities)
+logger.info(entities)
+logger.info('we have %d unique entities.' % len(entities))
 
 
 elapsed_time = time.time() - start_time
