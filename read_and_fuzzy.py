@@ -2,7 +2,7 @@ import csv
 import logging
 import time
 
-import fuzzywuzzy
+from fuzzywuzzy import fuzz
 
 start_time = time.time()
 
@@ -40,6 +40,12 @@ entities = list(entities)
 logger.info(entities)
 logger.info('we have %d unique entities.' % len(entities))
 
+for left_entity in entities:
+    for right_entity in entities:
+        if left_entity != right_entity:
+            how_similar = fuzz.ratio(left_entity, right_entity)
+            if how_similar > 90:
+                logger.info('%f %s %s' % (how_similar, left_entity, right_entity))
 
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
