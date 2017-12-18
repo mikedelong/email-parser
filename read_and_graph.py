@@ -29,7 +29,7 @@ logger.debug('started')
 known_names_file = './known_names.csv'
 with open(known_names_file, mode='r') as input_file:
     reader = csv.reader(input_file, delimiter=';')
-    known_names = {row[0]: row[1] for row in reader}
+    known_names = {row[0]: row[1] for row in reader if len(row) > 0}
 logger.info(known_names)
 
 records_file = './records.csv'
