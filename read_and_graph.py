@@ -39,7 +39,7 @@ with open(records_file, 'r', encoding='utf-8') as input_file:
 # strip off trailing newlines as appropriate
 records = [item.strip() for item in records]
 
-string_of_interest = 'xxx'
+string_of_interest = 'xx'
 G = nx.Graph()
 for record in records:
     items = record.split(';')
@@ -55,9 +55,9 @@ for record in records:
             logger.debug('substituting %s for %s as recipient' % (canonical_name, recipient))
             recipient = canonical_name
         if string_of_interest in sender.lower():
-            logger.info(sender)
+            logger.info('[%s]'% sender)
         if string_of_interest in recipient.lower():
-            logger.info(recipient)
+            logger.info('[%s]'% recipient)
         if sender not in G:
             G.add_node(sender)
         if recipient not in G:
