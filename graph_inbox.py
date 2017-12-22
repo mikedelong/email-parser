@@ -56,6 +56,8 @@ for message in messages:
         records.append(record)
     except AttributeError as attributeError:
         logger.warning(attributeError)
+    except Exception as error:
+        logger.warning(error)
 
 # before we go on let's write the records as ragged CSV
 records_file = './records.csv'
