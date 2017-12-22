@@ -31,6 +31,8 @@ for message in messages:
         logger.info('%s %s' % (subject, date))
     except AttributeError as attributeError:
         logger.warning(attributeError)
+    except Exception as error:
+        logger.warning(error)
 
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
