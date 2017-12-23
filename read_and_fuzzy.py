@@ -37,19 +37,21 @@ for record in records:
         entities.add(item)
 
 entities = list(entities)
+original_entities = entities.copy()
+for token in  ['@', '(', ')', '.', '_', ',', '/', '-', ':']:
+    entities = [entity.replace(token, ' ') for entity in entities]
+
+entities = [entity.replace('  ', ' ') for entity in entities]
+entities = [entity.strip() for entity in entities]
+
 logger.info(entities)
 logger.info('we have %d unique entities.' % len(entities))
 
-tokens = ['@', '(', ')', '.', '_', ',', '/', '-', ':']
 for left_entity in entities:
-    for token in tokens:
-        left_entity = left_entity.replace(token, ' ')
     for right_entity in entities:
-        for token in tokens:
-            right_entity = right_entity.replace(token, ' ')
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
-            if how_similar > 90:
+            if how_similar > 88:
                 logger.info('%f [%s] [%s]' % (how_similar, left_entity, right_entity))
 
 elapsed_time = time.time() - start_time
