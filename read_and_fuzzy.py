@@ -40,8 +40,13 @@ entities = list(entities)
 logger.info(entities)
 logger.info('we have %d unique entities.' % len(entities))
 
+tokens = ['@', '(', ')', '.', '_', ',', '/', '-', ':']
 for left_entity in entities:
+    for token in tokens:
+        left_entity = left_entity.replace(token, ' ')
     for right_entity in entities:
+        for token in tokens:
+            right_entity = right_entity.replace(token, ' ')
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
             if how_similar > 90:
