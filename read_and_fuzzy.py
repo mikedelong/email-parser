@@ -44,15 +44,17 @@ for token in  ['@', '(', ')', '.', '_', ',', '/', '-', ':']:
 
 entities = [entity.replace('  ', ' ') for entity in entities]
 entities = [entity.strip() for entity in entities]
-
+entities = [' '.join(entity.split(' ')[:3]) for entity in entities]
 logger.info(entities)
 logger.info('we have %d unique entities.' % len(entities))
 
-for left_entity in entities:
-    for right_entity in entities:
+for le in entities:
+    left_entity = le.lower()
+    for re in entities:
+        right_entity = re.lower()
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
-            if how_similar > 88:
+            if how_similar > 87:
                 logger.info('%d [%s] [%s]' % (how_similar, left_entity, right_entity))
             if how_similar > 93:
                 # https://stackoverflow.com/questions/17904097/python-difference-between-two-strings
