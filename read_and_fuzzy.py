@@ -50,7 +50,7 @@ for left_entity in entities:
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
             if how_similar > 90:
-                logger.info('%f %s %s' % (how_similar, left_entity, right_entity))
+                logger.info('%f [%s] [%s]' % (how_similar, left_entity, right_entity))
 
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
