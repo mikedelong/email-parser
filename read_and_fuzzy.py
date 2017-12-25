@@ -45,7 +45,7 @@ for record in records:
 
 entities = list(entities)
 original_entities = entities.copy()
-for token in  ['@', '(', ')', '.', '_', ',', '/', '-', ':']:
+for token in  ['@', '(', ')', '[', ']', '.', '_', ',', '/', '-', ':']:
     entities = [entity.replace(token, ' ') for entity in entities]
 
 entities = [entity.replace('  ', ' ') for entity in entities]
