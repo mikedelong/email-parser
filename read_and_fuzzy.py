@@ -22,7 +22,13 @@ known_names_file = './known_names.csv'
 with open(known_names_file, mode='r') as input_file:
     reader = csv.reader(input_file, delimiter=';')
     known_names = {row[0]: row[1] for row in reader}
-logger.info(known_names)
+logger.info('known names pairs: %s' % known_names)
+
+ignore_tokens_file = './tokens_to_ignore.csv'
+with open(ignore_tokens_file, mode='r') as input_file:
+    reader = csv.reader(input_file, delimiter=';')
+    ignore_tokens = {row[0]: row[1] for row in reader}
+logger.info('tokens to ignore: [%s]' % ignore_tokens)
 
 records_file = './records.csv'
 
@@ -54,7 +60,7 @@ for le in entities:
         right_entity = re.lower()
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
-            if how_similar > 87:
+            if how_similar > 80:
                 logger.info('%d [%s] [%s]' % (how_similar, left_entity, right_entity))
             if how_similar > 93:
                 # https://stackoverflow.com/questions/17904097/python-difference-between-two-strings
