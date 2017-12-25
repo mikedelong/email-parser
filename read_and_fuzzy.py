@@ -27,7 +27,7 @@ logger.info('known names pairs: %s' % known_names)
 ignore_tokens_file = './tokens_to_ignore.csv'
 with open(ignore_tokens_file, mode='r') as input_file:
     reader = csv.reader(input_file, delimiter=';')
-    ignore_tokens = {row[0]: row[1] for row in reader}
+    ignore_tokens = {row[0] for row in reader if len(row) > 0}
 logger.info('tokens to ignore: [%s]' % ignore_tokens)
 
 records_file = './records.csv'
@@ -50,6 +50,8 @@ for token in  ['@', '(', ')', '.', '_', ',', '/', '-', ':']:
 
 entities = [entity.replace('  ', ' ') for entity in entities]
 entities = [entity.strip() for entity in entities]
+for token in ignore_tokens:
+    entities = [entity.replace(token, '') for entity in entities]
 entities = [' '.join(entity.split(' ')[:3]) for entity in entities]
 logger.info(entities)
 logger.info('we have %d unique entities.' % len(entities))
