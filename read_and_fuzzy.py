@@ -5,6 +5,7 @@ import time
 
 from fuzzywuzzy import fuzz
 
+# start the clock
 start_time = time.time()
 
 # set up logging
@@ -52,7 +53,7 @@ entities = [entity.replace('  ', ' ') for entity in entities]
 entities = [entity.strip() for entity in entities]
 for token in ignore_tokens:
     entities = [entity.replace(token, '') for entity in entities]
-entities = [' '.join(entity.split(' ')[:3]) for entity in entities]
+entities = [' '.join(entity.split(' ')[:3]).strip() for entity in entities]
 logger.info(entities)
 logger.info('we have %d unique entities.' % len(entities))
 
@@ -63,7 +64,7 @@ for le in entities:
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
             if how_similar > 80:
-                logger.info('%d [%s] [%s]' % (how_similar, left_entity, right_entity))
+                logger.info('%d [%s] [%s]' % (how_similar, le, re))
             if how_similar > 93:
                 # https://stackoverflow.com/questions/17904097/python-difference-between-two-strings
                 for index, substring in enumerate(difflib.ndiff(left_entity, right_entity)):
