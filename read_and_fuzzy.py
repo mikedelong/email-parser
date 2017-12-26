@@ -1,9 +1,9 @@
 import csv
+import difflib
 import logging
 import time
 
 from fuzzywuzzy import fuzz
-import difflib
 
 start_time = time.time()
 
