@@ -45,7 +45,7 @@ for record in records:
 
 entities = list(entities)
 original_entities = entities.copy()
-for token in  ['@', '(', ')', '[', ']', '.', '_', ',', '/', '-', ':']:
+for token in ['@', '(', ')', '[', ']', '.', '_', ',', '/', '-', ':']:
     entities = [entity.replace(token, ' ') for entity in entities]
 
 entities = [entity.replace('  ', ' ') for entity in entities]
@@ -67,10 +67,11 @@ for le in entities:
             if how_similar > 93:
                 # https://stackoverflow.com/questions/17904097/python-difference-between-two-strings
                 for index, substring in enumerate(difflib.ndiff(left_entity, right_entity)):
-                    if substring[0]== ' ': continue
-                    elif substring[0]== '-':
+                    if substring[0] == ' ':
+                        continue
+                    elif substring[0] == '-':
                         logger.info(u'Delete "{}" from position {}'.format(substring[-1], index))
-                    elif substring[0]== '+':
+                    elif substring[0] == '+':
                         logger.info(u'Add "{}" to position {}'.format(substring[-1], index))
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
