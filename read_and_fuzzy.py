@@ -55,16 +55,17 @@ for token in ignore_tokens:
     entities = [entity.replace(token, '') for entity in entities]
 entities = [' '.join(entity.split(' ')[:3]).strip() for entity in entities]
 logger.info(entities)
-logger.info('we have %d unique entities.' % len(entities))
 
+near_match_count = 0
 for le in entities:
     left_entity = le.lower()
     for re in entities:
         right_entity = re.lower()
         if left_entity != right_entity:
             how_similar = fuzz.ratio(left_entity, right_entity)
-            if how_similar > 80:
+            if how_similar > 78:
                 logger.info('%d [%s] [%s]' % (how_similar, le, re))
+                near_match_count += 1
             if how_similar > 93:
                 # https://stackoverflow.com/questions/17904097/python-difference-between-two-strings
                 for index, substring in enumerate(difflib.ndiff(left_entity, right_entity)):
@@ -74,5 +75,6 @@ for le in entities:
                         logger.info(u'Delete "{}" from position {}'.format(substring[-1], index))
                     elif substring[0] == '+':
                         logger.info(u'Add "{}" to position {}'.format(substring[-1], index))
+logger.info('we have %d unique entities and %d near matches.' % (len(entities), near_match_count))
 elapsed_time = time.time() - start_time
 logger.debug('elapsed time %d seconds', elapsed_time)
