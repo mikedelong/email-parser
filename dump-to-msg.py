@@ -1,6 +1,7 @@
 import logging
 import time
-
+import email.generator
+import email.policy
 import win32com.client
 
 start_time = time.time()
@@ -24,11 +25,17 @@ folder_index = 6
 inbox = outlook.GetDefaultFolder(folder_index)
 messages = inbox.Items
 
+count = 0
 for message in messages:
     try:
         subject = message.Subject
         date = message.SentOn
         logger.info('%s %s' % (subject, date))
+        output_filename = './messages/%d' % count
+        with open(output_filename, 'w') as output:
+            generator = email.generator.Generator(output, policy=email.policy.EmailPolicy())
+            generator.flatten(message)
+        count += 1
     except AttributeError as attributeError:
         logger.warning(attributeError)
     except Exception as error:
