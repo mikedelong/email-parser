@@ -1,7 +1,6 @@
 import logging
 import time
-import email.generator
-import email.policy
+
 import win32com.client
 
 start_time = time.time()
@@ -30,7 +29,11 @@ for message in messages:
     try:
         subject = message.Subject
         date = message.SentOn
-        sender_address = message.Sender.Address
+        # todo use conditional assignment
+        if message.SenderEmailType == 'EX':
+            sender_address = message.Sender.GetExchangeUser().PrimarySmtpAddress
+        else:
+            sender_address = message.SenderEmailAddress
         logger.info('%s %s %s' % (subject, date, sender_address))
         # output_filename = './messages/%d' % count
         # message.SaveAs('./messages/%d' % count)
