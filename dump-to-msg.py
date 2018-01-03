@@ -29,11 +29,7 @@ for message in messages:
     try:
         subject = message.Subject
         date = message.SentOn
-        # todo use conditional assignment
-        if message.SenderEmailType == 'EX':
-            sender_address = message.Sender.GetExchangeUser().PrimarySmtpAddress
-        else:
-            sender_address = message.SenderEmailAddress
+        sender_address = message.Sender.GetExchangeUser().PrimarySmtpAddress if message.SenderEmailType == 'EX' else message.SenderEmailAddress
         logger.info('%s %s %s' % (subject, date, sender_address))
         # output_filename = './messages/%d' % count
         # message.SaveAs('./messages/%d' % count)
