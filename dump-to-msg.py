@@ -30,11 +30,13 @@ for message in messages:
     try:
         subject = message.Subject
         date = message.SentOn
-        logger.info('%s %s' % (subject, date))
-        output_filename = './messages/%d' % count
-        with open(output_filename, 'w') as output:
-            generator = email.generator.Generator(output, policy=email.policy.EmailPolicy())
-            generator.flatten(message)
+        sender_address = message.Sender.Address
+        logger.info('%s %s %s' % (subject, date, sender_address))
+        # output_filename = './messages/%d' % count
+        # message.SaveAs('./messages/%d' % count)
+        # with open(output_filename, 'w') as output:
+        #     generator = email.generator.Generator(output, policy=message.policy.clone(linesep='\r\n'))
+        #     generator.flatten(message)
         count += 1
     except AttributeError as attributeError:
         logger.warning(attributeError)
