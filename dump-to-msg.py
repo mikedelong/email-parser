@@ -25,6 +25,7 @@ messages = inbox.Items
 
 count = 0
 # https://stackoverflow.com/questions/31619012/extract-senders-email-address-from-outlook-exchange-in-python-using-win32
+# todo figure out how to write email messages to a file with all headers
 for message in messages:
     try:
         subject = message.Subject
