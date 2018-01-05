@@ -16,7 +16,6 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging_level)
 logger.debug('started')
 
-
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 
 # "6" refers to the index of a folder - in this case, the inbox.
