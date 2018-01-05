@@ -28,13 +28,9 @@ for message in messages:
     try:
         subject = message.Subject
         date = message.SentOn
-        sender_address = message.Sender.GetExchangeUser().PrimarySmtpAddress if message.SenderEmailType == 'EX' else message.SenderEmailAddress
+        sender_address = message.Sender.GetExchangeUser().PrimarySmtpAddress if message.SenderEmailType == 'EX' else \
+            message.SenderEmailAddress
         logger.info('%s %s %s' % (subject, date, sender_address))
-        # output_filename = './messages/%d' % count
-        # message.SaveAs('./messages/%d' % count)
-        # with open(output_filename, 'w') as output:
-        #     generator = email.generator.Generator(output, policy=message.policy.clone(linesep='\r\n'))
-        #     generator.flatten(message)
         count += 1
     except AttributeError as attributeError:
         logger.warning(attributeError)
