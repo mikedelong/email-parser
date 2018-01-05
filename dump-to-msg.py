@@ -24,6 +24,7 @@ inbox = outlook.GetDefaultFolder(folder_index)
 messages = inbox.Items
 
 count = 0
+# https://stackoverflow.com/questions/31619012/extract-senders-email-address-from-outlook-exchange-in-python-using-win32
 for message in messages:
     try:
         subject = message.Subject
