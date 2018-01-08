@@ -1,7 +1,10 @@
 import logging
 import time
 
+import pythoncom
 import win32com.client
+import email.generator
+import email.policy
 
 start_time = time.time()
 
@@ -33,9 +36,18 @@ for message in messages:
         sender_address = message.Sender.GetExchangeUser().PrimarySmtpAddress if message.SenderEmailType == 'EX' else \
             message.SenderEmailAddress
         logger.info('%s %s %s' % (subject, date, sender_address))
+        filename = './messages/{}.msg'.format(count)
+        message.SaveAs(filename)
+
         count += 1
     except AttributeError as attributeError:
         logger.warning(attributeError)
+    except pythoncom.com_error as comError:
+        logger.warning(comError)
+        logger.warning(vars(comError))
+        logger.warning(comError.args)
+        hr, msg, exc, arg = comError.args
+        logger.warning(comError)
     except Exception as error:
         logger.warning(error)
 
