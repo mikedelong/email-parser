@@ -1,22 +1,16 @@
 # https://codehandbook.org/how-to-read-email-from-gmail-using-python/
 
-
+import configparser
 import email
 import imaplib
 import logging
 
 
-# -------------------------------------------------
-#
-# Utility to read email from Gmail Using Python
-#
-# ------------------------------------------------
-
-def read_email_from_gmail(arg_smtp_server, arg_from_email, arg_from_pwd, arg_logger):
+def read_email_from_gmail(arg_smtp_server, arg_from_email, arg_from_pwd, arg_logger, arg_mailbox):
     try:
-        mail = imaplib.IMAP4_SSL(arg_smtp_server)
+        mail = imaplib.IMAP4_SSL(host=arg_smtp_server, port=993)
         mail.login(arg_from_email, arg_from_pwd)
-        mail.select('inbox')
+        mail.select(arg_mailbox)
 
         type, data = mail.search(None, 'ALL')
         mail_ids = data[0]
@@ -41,6 +35,10 @@ def read_email_from_gmail(arg_smtp_server, arg_from_email, arg_from_pwd, arg_log
         arg_logger.warning(str(e))
 
 
+# get configuration from config file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 # set up logging
 formatter = logging.Formatter('%(asctime)s : %(name)s :: %(levelname)s : %(message)s')
 logger = logging.getLogger('main')
@@ -51,14 +49,15 @@ logger.addHandler(console_handler)
 console_handler.setLevel(logging.DEBUG)
 logger.debug('started')
 
-ORG_EMAIL = "@gmail.com"
-# todo get this from a config file
-FROM_EMAIL = "yourEmailAddress" + ORG_EMAIL
-# todo get this from a config file
-FROM_PWD = "yourPassword"
-SMTP_SERVER = "imap.gmail.com"
-SMTP_PORT = 993
+logger.debug(config)
 
-read_email_from_gmail(SMTP_SERVER, FROM_EMAIL, FROM_PWD, logger)
+ORG_EMAIL = "@gmail.com"
+FROM_EMAIL = config['DEFAULT']['username'] + ORG_EMAIL
+FROM_PWD = config['DEFAULT']['password']
+SMTP_SERVER = "imap.gmail.com"
+# SMTP_PORT = 993
+
+if True:
+    read_email_from_gmail(SMTP_SERVER, FROM_EMAIL, FROM_PWD, logger, 'inbox')
 
 logger.debug('finished')
