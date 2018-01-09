@@ -8,7 +8,10 @@ import logging
 
 def read_email_from_gmail(arg_smtp_server, arg_from_email, arg_from_pwd, arg_logger, arg_mailbox):
     try:
-        mail = imaplib.IMAP4_SSL(host=arg_smtp_server, port=993)
+        port = 993
+        arg_logger.debug('making IAMP connection with server %s and port %d' % (arg_smtp_server, port))
+        mail = imaplib.IMAP4_SSL(host=arg_smtp_server, port=port, keyfile=None, certfile=None, ssl_context=None)
+        arg_logger.debug('logging in to email %s' % arg_from_email)
         mail.login(arg_from_email, arg_from_pwd)
         mail.select(arg_mailbox)
 
@@ -54,10 +57,14 @@ logger.debug(config)
 ORG_EMAIL = "@gmail.com"
 FROM_EMAIL = config['DEFAULT']['username'] + ORG_EMAIL
 FROM_PWD = config['DEFAULT']['password']
-SMTP_SERVER = "imap.gmail.com"
+SMTP_SERVER = 'imap.gmail.com'
 # SMTP_PORT = 993
 
 if True:
-    read_email_from_gmail(SMTP_SERVER, FROM_EMAIL, FROM_PWD, logger, 'inbox')
+    read_email_from_gmail(arg_smtp_server=SMTP_SERVER, arg_from_email=FROM_EMAIL, arg_from_pwd=FROM_PWD,
+                          arg_logger=logger, arg_mailbox='inbox')
 
 logger.debug('finished')
+
+# todo try this instead:
+# https://developers.google.com/gmail/api/quickstart/python
